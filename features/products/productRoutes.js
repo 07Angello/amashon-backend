@@ -18,6 +18,7 @@ router.post("/",
         check("longDescriptionEN", "The English Long Description can not be null or empty").not().isEmpty(),
         check("longDescriptionES", "The Spanish Long Description can not be null or empty").not().isEmpty(),
         check("image", "The Status can not be null or empty").not().isEmpty(),
+        check("brand", "The Brand can not be null or empty").not().isEmpty(),
         fieldsValidator
     ],
     createProduct);
