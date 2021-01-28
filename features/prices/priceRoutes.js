@@ -1,12 +1,20 @@
-const { Router } = require('express');
-const router = Router();
+const express = require('express');
+const { check, validationResult } = require('express-validator');
+const { fieldsValidator } = require('../../middlewares/fields-validator');
+const { createPrice, getPrices, getPrice } = require('./priceAppService');
 
-router.get('/', (req, res) => {
-    res.json({
-        ok: true,
-        Message: 'Message from prices',
-        Data: null
-    });
-});
+/*
+    Event Routes
+    host + /api/categories
+*/
 
-module.exports = router;
+const router = express.Router();
+
+router.post("/",
+    createPrice);
+
+router.get("/", getPrices);
+
+router.get("/:id", getPrice);
+
+module.exports = router

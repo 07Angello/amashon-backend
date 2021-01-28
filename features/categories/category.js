@@ -1,31 +1,19 @@
 const { model, Schema } = require('mongoose');
 
-const ProductSchema = Schema({
-    description: {
+const CategorySchema = Schema({
+    descriptionEN: {
         type: String,
         required: true
     },
-    longDescription: {
+    descriptionES: {
         type: String
     },
-    sellingPrice: {
-        type: Number,
-        required: true
-    },
-    buyingPrice: {
-        type: Number,
-        required: true
-    },
-    status: {
-        type: String
-    },
-    user: {
+    product: {
         type: Schema.Types.ObjectId,
-        ref: 'Category',
-        required: true
+        ref: 'Product'
     },
 }, {
     timestamps: true
 });
 
-module.exports = model('Product', ProductSchema);
+module.exports = model('Category', CategorySchema);

@@ -3,8 +3,6 @@ const Product = require('./product');
 
 // POST: api/products/
 const createProduct = async( req, res = response ) => {
-    console.log(req.body)
-
     const product = new Product(req.body);
 
     try {
@@ -28,12 +26,13 @@ const createProduct = async( req, res = response ) => {
 
 // GET: api/products/
 const getProducts = async( req, res = response ) => {
-    const { pageNumber, searchedProduct } = req.body;
+    const { pageNumber } = req.body;
+    const searchedProduct = req.params.searchedProduct;
 
     const resultsPerPage = 10;
 
     const pgNumber = pageNumber == 0 ? 0 : Number(pageNumber);
-    const srchProduct = searchedProduct == null || searchedProduct == '' ? '' : searchedProduct;
+    const srchProduct = searchedProduct == null || searchedProduct == '' || searchedProduct == 'ALL' ? '' : searchedProduct;
 
     const regex = new RegExp(srchProduct, 'i');
     const from = resultsPerPage * pgNumber;
@@ -42,7 +41,7 @@ const getProducts = async( req, res = response ) => {
                 //.skip( from )
                 //.limit( resultsPerPage )
                 //.sort( 'description' )
-                //.populate( 'user', 'name' )
+                .populate( 'Category' )
                 .exec(( err, products ) => {
                     if (err) {
                         return res.status(400).json({
@@ -58,7 +57,6 @@ const getProducts = async( req, res = response ) => {
                         });
                     }
 
-                    console.log(products.length);
                     return res.status(201).json({
                         Data: products,
                         Message: ""

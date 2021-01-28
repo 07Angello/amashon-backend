@@ -20,17 +20,7 @@ const ProductSchema = Schema({
     },
     brand: {
         type: String
-    },
-    category: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-        required: false
-    },
-    country: {
-        type: Schema.Types.ObjectId,
-        ref: 'Category',
-        required: false
-    },
+    }
 }, {
     timestamps: true
 });
