@@ -1,9 +1,14 @@
 const express = require('express');
+const { dbConnection } = require('./configs/database');
 const app = express();
+const routes = require('./routes/routes');
+
+dbConnection();
 
 //routes
-//app.use('./routes/routes.js');
+app.use(routes);
 
-app.listen(4000, () => {
-    console.log('Server running on port 4000');
+app.listen(process.env.PORT, () => {
+    console.log(`Server running on port ${process.env.PORT}`);
+    console.log(`Database connecting, please wait...`);
 });
