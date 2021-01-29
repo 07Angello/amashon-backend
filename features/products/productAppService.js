@@ -28,16 +28,19 @@ const createProduct = async( req, res = response ) => {
 const getProducts = async( req, res = response ) => {
     const { pageNumber } = req.body;
     const searchedProduct = req.params.searchedProduct;
+    const searchedCountry = req.params.searchedCountry;
 
     const resultsPerPage = 10;
 
     const pgNumber = pageNumber == 0 ? 0 : Number(pageNumber);
     const srchProduct = searchedProduct == null || searchedProduct == '' || searchedProduct == 'ALL' ? '' : searchedProduct;
+    const srchCountry = searchedCountry == null || searchedCountry == '' || searchedCountry == 'ALL' ? '' : searchedCountry;
 
     const regex = new RegExp(srchProduct, 'i');
+    const regexC = new RegExp(srchCountry, 'i');
     const from = resultsPerPage * pgNumber;
 
-    await Product.find( {"descriptionEN": regex} )
+    await Product.find( {"descriptionEN": regex, "country": regexC} )
                 //.skip( from )
                 //.limit( resultsPerPage )
                 //.sort( 'description' )

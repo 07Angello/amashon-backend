@@ -20,6 +20,12 @@ const ProductSchema = Schema({
     },
     brand: {
         type: String
+    },
+    country: {
+        type: String
+    },
+    price: {
+        type: Number
     }
 }, {
     timestamps: true
