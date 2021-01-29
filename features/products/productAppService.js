@@ -29,18 +29,21 @@ const getProducts = async( req, res = response ) => {
     const { pageNumber } = req.body;
     const searchedProduct = req.params.searchedProduct;
     const searchedCountry = req.params.searchedCountry;
+    const searchedCategory = req.params.searchedCategory;
 
     const resultsPerPage = 10;
 
     const pgNumber = pageNumber == 0 ? 0 : Number(pageNumber);
     const srchProduct = searchedProduct == null || searchedProduct == '' || searchedProduct == 'ALL' ? '' : searchedProduct;
     const srchCountry = searchedCountry == null || searchedCountry == '' || searchedCountry == 'ALL' ? '' : searchedCountry;
+    const srchCategory = searchedCategory == null || searchedCategory == '' || searchedCategory == 'ALL' ? '' : searchedCategory;
 
     const regex = new RegExp(srchProduct, 'i');
     const regexC = new RegExp(srchCountry, 'i');
+    const regexCt = new RegExp(srchCategory, 'i');
     const from = resultsPerPage * pgNumber;
 
-    await Product.find( {"descriptionEN": regex, "country": regexC} )
+    await Product.find( {"descriptionEN": regex, "country": regexC, "category": regexCt} )
                 //.skip( from )
                 //.limit( resultsPerPage )
                 //.sort( 'description' )
@@ -54,9 +57,9 @@ const getProducts = async( req, res = response ) => {
                     }
 
                     if (!products || products.length === 0) {
-                        return res.status(404).json({
+                        return res.json({
                             Data: "",
-                            Message: "No se encontraron productos."
+                            Message: "Could not founds products with these filters."
                         });
                     }
 

@@ -23,7 +23,7 @@ router.post("/",
     ],
     createProduct);
 
-router.get("/filtered/:searchedProduct/:searchedCountry", getProducts);
+router.get("/filtered/:searchedProduct/:searchedCountry/:searchedCategory", getProducts);
 
 router.put("/:id",
     [
